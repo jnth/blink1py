@@ -1,3 +1,6 @@
+#!/usr/bin/en python
+# coding: utf-8
+
 import blink1_raw as b1raw
 
 
@@ -83,6 +86,6 @@ class Blink1(object):
         if n is None:
             b1raw.fade_to_rgb(self._device, time, r, g, b)
         elif n in (1, 2):
-            b1raw.fade_to_rgb(self._device, time, r, g, b, n)
+            b1raw.fade_to_rgbn(self._device, time, r, g, b, n)
         else:
             raise Blink1Error('n must be None, 1 or 2')
