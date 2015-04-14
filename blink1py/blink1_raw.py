@@ -56,6 +56,16 @@ def set_rgb(device, r, g, b):
     b = c_ubyte(b)
     return setRGB(device, r, g, b)
 
+setRGBN = libblink1.blink1_setRGBN
+setRGBN.argtypes = [c_void_p, c_ubyte, c_ubyte, c_ubyte, c_ubyte]
+
+def set_rgbn(device, r, g, b, n):
+    r = c_ubyte(r)
+    g = c_ubyte(g)
+    b = c_ubyte(b)
+    n = c_ubyte(n)
+    return setRGBN(device, r, g, b, n)
+
 _play = libblink1.blink1_play
 _play.argtypes = [c_void_p, c_ubyte, c_ubyte]
 

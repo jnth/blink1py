@@ -1,7 +1,13 @@
 import blink1_raw as b1raw
 
+
 class Blink1NotFoundError(Exception):
     pass
+
+
+class Blink1Error(Exception):
+    pass
+
 
 def open_blink1(id=None, serial=None, path=None):
     if id is not None:
@@ -17,8 +23,10 @@ def open_blink1(id=None, serial=None, path=None):
             'blink(1) library could not find a blink(1) device')
     return Blink1(blink1)
 
+
 def close_blink1(blink1):
     b1raw.blink1_close(blink1)
+
 
 class Blink1(object):
     def __init__(self, device):
@@ -63,11 +71,18 @@ class Blink1(object):
     def on(self):
         self.set_rgb(255, 255, 255)
 
-    def set_rgb(self, r=0, g=0, b=0):
-        self.fade_rgb(r, g, b)
-
-    def fade_rgb(self, r=0, g=0, b=0, time=0):
-        if not time:
+    def set_rgb(self, r=0, g=0, b=0, n=None):
+        if n is None:
             b1raw.set_rgb(self._device, r, g, b)
+        elif n in (1, 2):
+            b1raw.set_rgbn(self._device, r, g, b, n)
         else:
+            raise Blink1Error('n must be None, 1 or 2')
+
+    def fade_rgb(self, r=0, g=0, b=0, time=0, n=None):
+        if n is None:
             b1raw.fade_to_rgb(self._device, time, r, g, b)
+        elif n in (1, 2):
+            b1raw.fade_to_rgb(self._device, time, r, g, b, n)
+        else:
+            raise Blink1Error('n must be None, 1 or 2')
