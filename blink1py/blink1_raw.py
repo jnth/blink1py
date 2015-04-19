@@ -1,7 +1,12 @@
-#!/usr/bin/en python
+#!/usr/bin/env python
 # coding: utf-8
 
-from ctypes import (c_int, CDLL, c_char_p, c_wchar_p, c_void_p, c_ushort, c_ubyte, byref)
+""" Blink(1) raw control with ctypes
+"""
+
+import os
+import sys
+from ctypes import CDLL, c_int, c_char_p, c_wchar_p, c_void_p, c_ushort, c_ubyte, byref
 from ctypes.util import find_library
 
 
@@ -9,11 +14,16 @@ class Blink1LibraryError(Exception):
     pass
 
 
-libname = find_library("blink1")
-if not libname:
-    raise Blink1LibraryError('blink(1) library not found')
+# Find the C library
+if 'win' in sys.platform:  # Windows OS: use the dll here
+    whereami = os.path.dirname(os.path.realpath(__file__))
+    libblink1 = CDLL(os.path.join(whereami, "blink1-lib"))
 
-libblink1 = CDLL(libname)
+else:  # Other OS: try to find it
+    libname = find_library("blink1")
+    if not libname:
+        raise Blink1LibraryError('blink(1) library not found')
+    libblink1 = CDLL(libname)
 
 
 blink1_open = libblink1.blink1_open
@@ -51,39 +61,17 @@ def open_by_id(id):
     return openById(id)
 
 
-fadeToRGB = libblink1.blink1_fadeToRGB
+fadeToRGB = libblink1.blink1_fadeToRGBN
 fadeToRGB.argtypes = [c_void_p, c_ushort, c_ubyte, c_ubyte, c_ubyte]
 
 
-def fade_to_rgb(device, time, r, g, b):
+def fade_to_rgb(device, time, r, g, b, n):
     time = c_ushort(time)
     r = c_ubyte(r)
     g = c_ubyte(g)
     b = c_ubyte(b)
-    return fadeToRGB(device, time, r, g, b)
-
-
-setRGB = libblink1.blink1_setRGB
-setRGB.argtypes = [c_void_p, c_ubyte, c_ubyte, c_ubyte]
-
-
-def set_rgb(device, r, g, b):
-    r = c_ubyte(r)
-    g = c_ubyte(g)
-    b = c_ubyte(b)
-    return setRGB(device, r, g, b)
-
-
-setRGBN = libblink1.blink1_setRGBN
-setRGBN.argtypes = [c_void_p, c_ubyte, c_ubyte, c_ubyte, c_ubyte]
-
-
-def set_rgbn(device, r, g, b, n):
-    r = c_ubyte(r)
-    g = c_ubyte(g)
-    b = c_ubyte(b)
     n = c_ubyte(n)
-    return setRGBN(device, r, g, b, n)
+    return fadeToRGB(device, time, r, g, b, n)
 
 
 _play = libblink1.blink1_play
