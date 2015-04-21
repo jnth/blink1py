@@ -1,1 +1,4 @@
 include LICENSE.txt
+include example.py
+include README.rst
+include blink1py/blink1-lib.dll
