@@ -4,6 +4,8 @@
 from __future__ import division
 import blink1_raw as b1raw
 import time
+import random
+import colorsys
 
 
 def hex2rgb(color):
@@ -126,7 +128,8 @@ class Blink1:
         b1raw.fade_to_rgb(self._device, tms, r, g, b, n)
         if duration is not None:
             time.sleep(duration + t)
-            self.off()
+            self.fade_rgb(t=t)
+            time.sleep(t)  # wait for the led to fade off.
 
     def set_rgbn(self, led1, led2, duration=None, swap=None):
         """ Turn the leds on two specific colors.
@@ -148,3 +151,23 @@ class Blink1:
             l1, l2 = l2, l1  # swap
         if duration is not None:
             self.off()
+
+    def random(self, n=5, duration=1):
+        """ Random color (hue part of hsv colorspace).
+        :param n: number of random colors.
+        :param duration: duration in seconds for each color.
+        """
+        for i in xrange(n):
+            h = random.random()  # random hue
+            r, g, b = [int(e) for e in colorsys.hsv_to_rgb(h, 1, 255)]
+            self.set_rgb(r, g, b, duration=duration)
+
+    def rainbow(self, duration=0.1):
+        """ Rainbow color pattern.
+        :param duration: duration in seconds for each color.
+        """
+        for h in [e / 100. for e in xrange(0, 101, 2)]:
+            r, g, b = [int(e) for e in colorsys.hsv_to_rgb(h, 1, 255)]
+            self.fade_rgb(r, g, b, t=duration)
+            time.sleep(duration)
+        self.off()

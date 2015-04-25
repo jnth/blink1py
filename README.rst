@@ -67,3 +67,11 @@ Fadding colors ::
     b.fade_rgb(255, 0, 0, t=0.5, n=2)  # ... with red at the 2nd led
     b.fade_rgb(0, 0, 255, t=0.2, duration=3)  # ... blue for 3 seconds
 
+Random colors ::
+
+    b.random()  # five random colors
+    b.random(n=10, duration=0.2)  # ten random colors of 0.2 seconds
+
+Rainbow colors ::
+
+    b.rainbow()
