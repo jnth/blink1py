@@ -10,8 +10,8 @@ import colorsys
 
 def hex2rgb(color):
     """ Convert hex color value to (r, g, b) tuple.
-    :param color: hex color value ('#xxxxxx' or 'xxxxxx' format)
-    :return: (r, g, b)
+    :param color: hex color value ('#xxxxxx' or 'xxxxxx' format).
+    :return: (r, g, b) with r, g, b between 0 and 255.
     """
     if len(color) == 7:
         color = color[1:]
@@ -32,6 +32,12 @@ class Blink1:
         self._open_blink1(id, serial, path)
         self.__closed = False
 
+    def __str__(self):
+        return "Blink1(vid=%s, pid=%s, version=%s, serialnum=%s)" % (self.vid, self.pid, self.version, self.serialnum)
+        
+    def __repr__(self):
+        return "<%s>" % self.__repr__()
+        
     def __enter__(self):
         return self
 
@@ -58,7 +64,38 @@ class Blink1:
                 'blink(1) library could not find a blink(1) device')
         self._device = blink1
 
+    @property
+    def vid(self):
+        """ Get Vendor Id in hex format.
+        :return: string, starting with '0x'.
+        """
+        return '0x{vid:04x}'.format(vid=b1raw.vid())
+
+    @property
+    def pid(self):
+        """ Get Product Id.
+        :return: string, starting with '0x'.
+        """
+        return '0x{pid:04x}'.format(pid=b1raw.pid())
+
+    @property
+    def version(self):
+        """ Get Blink(1) version.
+        :return: int.
+        """
+        return b1raw.version(self._device)
+
+    @property
+    def serialnum(self):
+        """ Get serial number of the Blink(1) device.
+        :return: 8-char string.
+        """
+        sn = b1raw.serialnum(self._device)
+        return "".join([e.encode('utf-32')[4:] for e in sn])
+        
     def close(self):
+        """ Close Blink(1) connection.
+        """
         if not self.__closed:
             try:
                 b1raw.blink1_close(self._device)

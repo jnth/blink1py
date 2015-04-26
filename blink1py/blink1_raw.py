@@ -61,6 +61,24 @@ def open_by_id(id):
     return openById(id)
 
 
+vid = libblink1.blink1_vid
+vid.restype = c_ushort
+
+
+pid = libblink1.blink1_pid
+pid.restype = c_ushort
+
+
+version = libblink1.blink1_getVersion
+version.argtypes = [c_void_p]
+version.restype = c_ushort
+
+
+serialnum = libblink1.blink1_getSerialForDev
+serialnum.argtypes = [c_void_p]
+serialnum.restype = c_wchar_p
+
+
 fadeToRGB = libblink1.blink1_fadeToRGBN
 fadeToRGB.argtypes = [c_void_p, c_ushort, c_ubyte, c_ubyte, c_ubyte]
 

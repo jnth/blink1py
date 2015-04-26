@@ -22,7 +22,10 @@ Example ::
     from blink1py import Blink1
     import time
 
-    b = Blink1()
+    b = Blink1()  # open device
+
+    print b  # show some informations (vendor id, product id, firmware version and serial number)
+
     b.set_rgb(255, 0, 0)  # set to red
     b.on()  # set to white
     time.sleep(1)  # wait for 1 second
@@ -75,3 +78,11 @@ Random colors ::
 Rainbow colors ::
 
     b.rainbow()
+
+Get the vendor, product id, firmware version and serial number of the device ::
+
+    b.vid  # vendor id
+    b.pid  # product id
+    b.version  # firmware version
+    b.serialnum  # serial number
+
