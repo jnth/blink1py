@@ -90,9 +90,8 @@ class Blink1:
         """ Get serial number of the Blink(1) device.
         :return: 8-char string.
         """
-        sn = b1raw.serialnum(self._device)
-        return "".join([e.encode('utf-32')[4:] for e in sn])
-        
+        return b1raw.getCachedSerial(0)
+
     def close(self):
         """ Close Blink(1) connection.
         """

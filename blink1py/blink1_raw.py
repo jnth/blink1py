@@ -74,9 +74,9 @@ version.argtypes = [c_void_p]
 version.restype = c_ushort
 
 
-serialnum = libblink1.blink1_getSerialForDev
-serialnum.argtypes = [c_void_p]
-serialnum.restype = c_wchar_p
+getCachedSerial = libblink1.blink1_getCachedSerial
+getCachedSerial.argtypes = [c_int]
+getCachedSerial.restype = c_char_p
 
 
 fadeToRGB = libblink1.blink1_fadeToRGBN
