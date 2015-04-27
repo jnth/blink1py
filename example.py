@@ -8,6 +8,8 @@
 from blink1py import Blink1, hex2rgb
 
 with Blink1() as b:
+    print b
+
     b.on(duration=1)  # white during 1 second
     b.set_rgb(*hex2rgb('#ff00f0'), duration=2)  # purple during 2 seconds
     b.off(duration=0.5)  # pause

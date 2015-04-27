@@ -86,3 +86,12 @@ Get the vendor, product id, firmware version and serial number of the device ::
     b.version  # firmware version
     b.serialnum  # serial number
 
+
+Test
+====
+
+A testing code was made to test Blink(1) device with this library.
+Use it when a Blink(1) device is plug on your computer. ::
+
+    python test.py
+
