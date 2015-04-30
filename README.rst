@@ -3,6 +3,7 @@ blink1py
 ========
 
 Blink(1) python library (wrapper of the C library).
+Supported and tested on with Python 2.7, 3.3 and 3.4.
 
 
 Prerequesites
@@ -10,8 +11,8 @@ Prerequesites
 
 1. Make the blink1 library (see `blink1/commandline <https://github.com/todbot/blink1/tree/master/commandline>`_)
 
-2. Rename the blink1 library to ``libblink1.so.0.0`` (or something that
-will resolve as blink1) and add it to your path (ie ldconfig)
+2. Rename the blink1 library to ``libblink1.so.0.0`` (or something that will resolve as blink1)
+   and add it to your path (ie ldconfig)
 
 
 Usage

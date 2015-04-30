@@ -4,4 +4,4 @@
 """ Blink(1) control tool.
 """
 
-from blink1 import Blink1, hex2rgb
+from .blink1 import Blink1, hex2rgb

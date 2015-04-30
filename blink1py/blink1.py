@@ -2,7 +2,7 @@
 # coding: utf-8
 
 from __future__ import division
-import blink1_raw as b1raw
+from . import blink1_raw as b1raw
 import time
 import random
 import colorsys
@@ -179,7 +179,7 @@ class Blink1:
         r1, g1, b1 = led1
         r2, g2, b2 = led2
         l1, l2 = 1, 2
-        for i in xrange(swap):
+        for i in range(swap):
             b1raw.fade_to_rgb(self._device, 0, r1, g1, b1, l1)
             b1raw.fade_to_rgb(self._device, 0, r2, g2, b2, l2)
             if duration is not None:
@@ -193,7 +193,7 @@ class Blink1:
         :param n: number of random colors.
         :param duration: duration in seconds for each color.
         """
-        for i in xrange(n):
+        for i in range(n):
             h = random.random()  # random hue
             r, g, b = [int(e) for e in colorsys.hsv_to_rgb(h, 1, 255)]
             self.set_rgb(r, g, b, duration=duration)
@@ -202,7 +202,7 @@ class Blink1:
         """ Rainbow color pattern.
         :param duration: duration in seconds for each color.
         """
-        for h in [e / 100. for e in xrange(0, 101, 2)]:
+        for h in [e / 100. for e in range(0, 101, 2)]:
             r, g, b = [int(e) for e in colorsys.hsv_to_rgb(h, 1, 255)]
             self.fade_rgb(r, g, b, t=duration)
             time.sleep(duration)

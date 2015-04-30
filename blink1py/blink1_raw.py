@@ -15,6 +15,7 @@ class Blink1LibraryError(Exception):
 
 
 # Find the C library
+# TODO: work only with 32-bits python's version (dll is a 32 bit-version) : add 64-bits lib.
 if 'win' in sys.platform:  # Windows OS: use the dll here
     whereami = os.path.dirname(os.path.realpath(__file__))
     libblink1 = CDLL(os.path.join(whereami, "blink1-lib"))
