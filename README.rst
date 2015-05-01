@@ -3,7 +3,7 @@ blink1py
 ========
 
 Blink(1) python library (wrapper of the C library).
-Supported and tested on with Python 2.7, 3.3 and 3.4.
+Supported and tested on 32-bits Python 2.7, 3.3 and 3.4.
 
 
 Prerequesites
@@ -95,4 +95,3 @@ A testing code was made to test Blink(1) device with this library.
 Use it when a Blink(1) device is plug on your computer. ::
 
     python test.py
-

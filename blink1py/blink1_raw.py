@@ -6,6 +6,7 @@
 
 import os
 import sys
+import struct
 from ctypes import CDLL, c_int, c_char_p, c_wchar_p, c_void_p, c_ushort, c_ubyte, byref
 from ctypes.util import find_library
 
@@ -14,9 +15,18 @@ class Blink1LibraryError(Exception):
     pass
 
 
+def get_python_architecture_version():
+    """ Get the Python architecture version.
+    :return: 32 for 32bit or 64 for 64bit.
+    """
+    return struct.calcsize("P") * 8
+
+
 # Find the C library
-# TODO: work only with 32-bits python's version (dll is a 32 bit-version) : add 64-bits lib.
+# TODO: work only with 32-bits python's version (dll is a 32 bit-version)
 if 'win' in sys.platform:  # Windows OS: use the dll here
+    if get_python_architecture_version() == 64:
+        raise Blink1LibraryError('blink(1) library not compatible with 64bit Python version.')
     whereami = os.path.dirname(os.path.realpath(__file__))
     libblink1 = CDLL(os.path.join(whereami, "blink1-lib"))
 
